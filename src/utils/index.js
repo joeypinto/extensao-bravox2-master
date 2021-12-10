@@ -150,4 +150,4 @@ export const getSunday = (value) =>{
 }
 const dev = process.env.NODE_ENV !== 'production';
 //export const serverPath = dev ? 'http://localhost:3000' : 'https://bravox-app.herokuapp.com';
-export const serverPath = 'https://extensao-bravox2-master-q0biqf3h9-joeypinto.vercel.app'
+export const serverPath = 'https://extensao-bravox2-master.vercel.app'
