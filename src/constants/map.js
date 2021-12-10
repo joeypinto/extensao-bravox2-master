@@ -1,0 +1,16 @@
+export const MAP_CONSTANTS = {
+  MAP_FILTER_TECNICALS: 'MAP_FILTER_TECNICALS',
+  MAP_FILTER: 'MAP_FILTER',
+  MAP_FILTER_CEP: 'MAP_FILTER_CEP',
+  MAP_FILTER_UF: 'MAP_FILTER_UF',
+  MAP_FILTER_CITY: 'MAP_FILTER_CITY',
+  MAP_FILTER_DISTANCE: 'MAP_FILTER_DISTANCE',
+  UNITS_DISTANCE: 'kilometers'
+}
+
+export const FILTER_INIT = {
+  uuid: '',
+  type: '',
+  filterLabel: '',
+  filterValue: ''
+}
