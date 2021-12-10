@@ -1,11 +1,17 @@
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
+  resolve: {
+    fallback: {
+      "fs": false,
+      "path": false,
+      "os": false,
+    },
+},
   pwa: {
     dest: 'public',
     disable: !isProd
   },
-  nftTracing: true,
   images: {
     domains: ['i.imgur.com']
   },

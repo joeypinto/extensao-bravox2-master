@@ -1,10 +1,10 @@
 import connectToDatabase from "config/mongodb";
 
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
   const { method } = req;
   const { db } = await connectToDatabase();
-  const collectionUser = db.collection('USERS');
   const collectionOrder = db.collection('ORDERS');
   const collectionTechnical = db.collection('TECNICALS_API')
     switch (method) {

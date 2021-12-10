@@ -1,8 +1,8 @@
 import { MongoClient } from 'mongodb';
 
 const dbName = "myFirstDatabase";
-//const uri = "mongodb+srv://freire:freire@cluster0.aqiu1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const uri = "mongodb://localhost:27017/myFirstDatabase";
+const uri = "mongodb+srv://freire:freire@cluster0.aqiu1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+//const uri = "mongodb://localhost:27017/myFirstDatabase";
 
 let cachedDb;
 let cachedClient;

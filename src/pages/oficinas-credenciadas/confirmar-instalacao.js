@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken'
 import { serverPath } from './../../utils/index';
 
 const confirmInstallations = (props) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter()
   const queryPage = router.query.page ? router.query.page : 1
   const searchKey = router.query.search ? router.query.search : undefined
