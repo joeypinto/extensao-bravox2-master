@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect,useContext } from 'react'
 import { TECHNICAL_DAYS } from '../constants/temporary'
 import { CALENDAR_DAYS } from 'constants/temporary'
 import { serverPath } from './../utils/index';
+import { GlobalContext } from 'contexts/globalContext'
 export const SchedulingContext = createContext()
 
 const SchedulingContextProvider = ({ children }) => {
@@ -13,7 +14,8 @@ const SchedulingContextProvider = ({ children }) => {
   const [periodSelected, setPeriodSelected] = useState('morning')
   const [calendar, setCalendar] = useState('')
   const [technical, setTechnical] = useState('')
-
+  const router = useRouter()
+  const GlobalCtx = useContext(GlobalContext)
   useEffect( async() => {
     var TECHNICAL_DAYS = []
     const calendar = await getCalendar();
@@ -65,6 +67,13 @@ const SchedulingContextProvider = ({ children }) => {
 
   const saveSchedulingEditions = (value) => {
     fetch(`${serverPath}/api/calendar_days`, {method: 'POST',body:JSON.stringify({ID_TECHNICAL:children.props.value.idTechnical,CALENDAR:value}),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(""));
+    GlobalCtx.setInformationsModal({
+      title: 'Cadastrado com sucesso!',
+      body: '<p>A agenda da semana foi cadastrada com sucesso!</p>',
+      type: 'success'
+    })
+    GlobalCtx.toggleModalContainer('alert')
+    //router.push(`/oficinas-credenciadas/agenda-recorrente`)
   }
 
   const saveInfoOrderModify = (

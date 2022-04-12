@@ -21,7 +21,7 @@ const MapContextProvider = ({ children,orderId }) => {
   const [scheduling, setScheduling] = useState({
     period: '',
     dateScheduling: '',
-    schedulinglabel: 'morning'
+    schedulinglabel: ''
   })
   const [assistentsTecnicaslSelected, setAssistentsTecnicaslSelected] =
     useState(0)
@@ -29,6 +29,7 @@ const MapContextProvider = ({ children,orderId }) => {
     useState([])
   const [filterTecnicalsSelected, setFilterTecnicalsSelected] = useState('')
   const [filterDistanceSelected, setFilterDistanceSelected] = useState('')
+  const [listTecnicalbyCep, setListTecnicalbyCep] = useState('')
   const [isOpenFiltersMobile, setIsOpenFiltersMobile] = useState(false)
   const [filtersPrimaryFormPreview, setFiltersPrimaryFormPreview] =
     useState(FILTERS_PREVIEW_INIT)
@@ -90,7 +91,6 @@ const MapContextProvider = ({ children,orderId }) => {
             ...tecnical,
             distance: distance(coordenateUser, coordenateTecnical, options)
           }
-
           return previewTecnical
         })
         filterAssistentsTecnicalsForPostalCode(listAT)
@@ -145,15 +145,11 @@ const MapContextProvider = ({ children,orderId }) => {
   }
 
   //Filtro de distâncias
-  const filterDistante = (listTecnical) => {
-    let filterState = isFilterCurrency.filter((filterCurrency) => {
-      return filterCurrency.type === MAP_CONSTANTS.MAP_FILTER_DISTANCE
-    })
+  const filterDistante = (listTecnicals,filtersCurrency) => {
+    let filterState = filtersCurrency
 
-    let newListTecnicals =
-      listTecnical.length > 0 && filterState.length > 0
-        ? listTecnical.filter((item) => {
-            switch (filterState[0].filterValue) {
+    let newListTecnicals = listTecnicals.filter((item) => {            
+            switch (filterState) {
               case '20km':
                 return item.distance <= 20
               case '50km':
@@ -164,41 +160,75 @@ const MapContextProvider = ({ children,orderId }) => {
                 return item
             }
           })
-        : listTecnical
-
+  
     return newListTecnicals
   }
 
-  //Filtrando a cidade
-  const filterCity = (listTecnicals) => {
-    let filterCity = isFilterCurrency.filter((filterCurrency) => {
-      return filterCurrency.type === MAP_CONSTANTS.MAP_FILTER_CITY
-    })
+  const getDistancia = (listTecnicals,cep,filterState) =>{
+    let options = { units: MAP_CONSTANTS.UNITS_DISTANCE }
+    const CepCoords = require('coordenadas-do-cep')
+    return CepCoords.getByCep(cep)
+      .then((info) => {
+        console.log(info)
+        const coordenateUser = point([info.lon, info.lat])
+        //retorna o mesmo 'info' da versão em promise
+        let listAT = listTecnicals.filter((tecnical) => {
+          const coordenateTecnical = point([
+            tecnical.LONGITUDE,
+            tecnical.LATITUDE
+          ])
+          let previewTecnical = {
+            ...tecnical,
+            distance: distance(coordenateUser, coordenateTecnical, options)
+          }
+          console.log(filterState)
+          if(filterState == '20km'){
+            if(previewTecnical.distance <= 20){
+              return previewTecnical
+            }
+          }
+          if(filterState == '50km'){
+            if(previewTecnical.distance <= 50){
+              return previewTecnical
+            }
+          }if(filterState == 'Acima de 50km'){
+            return previewTecnical
+          }          
+        })
+        console.log(listAT) 
+        setListAssistentsTecnicals(listAT)     
+        }).catch((err) => {
+          //retorna o mesmo parâmetro 'err' da versão em promise
+          let infoModal = {
+            title: 'CEP Inválido',
+            body: '<p>Não foi possível encontrar seu CEP, tente novamente mais tarde.</p>',
+            type: 'error'
+          }
+          ctxGlobal.setInformationsModal(infoModal)
+          ctxGlobal.toggleModalContainer('alert')
+        })
+      }
 
+  //Filtrando a cidade
+  const filterCity = (listTecnicals,filtersCurrency) => {
+    let filterState = filtersCurrency
     let newListTecnicals =
-      filterCity.length > 0
-        ? listTecnicals.filter((item) => {
-            return item.city === filterCity[0].filterLabel
+         listTecnicals.filter((item) => {
+            return item.MUNICIPIO === filterState
           })
-        : listTecnicals
-          console.log(newListTecnicals,"new")
-    return filterDistante(newListTecnicals)
+          
+    return newListTecnicals
   }
 
   //Filtrando o estado
-  const filterState = (listTecnicals) => {
-    let filterState = isFilterCurrency.filter((filterCurrency) => {
-      return filterCurrency.type === MAP_CONSTANTS.MAP_FILTER_UF
-    })
-
-    let newListTecnicals =
-      filterState.length > 0
-        ? listTecnicals.filter((item) => {
-            return item.state === filterState[0].filterLabel
+  const filterState = (listTecnicals,filtersCurrency) => {    
+    let filterState = filtersCurrency
+    
+    let newListTecnicals = listTecnicals.filter((item) => {
+            console.log(item.ESTADO,"const",filterState)
+            return item.ESTADO === filterState
           })
-        : listTecnicals
-
-    return filterCity(newListTecnicals)
+    return newListTecnicals
   }
 
   //Realiza a verficação de filtros para listar
@@ -262,7 +292,6 @@ const MapContextProvider = ({ children,orderId }) => {
       arrValidateTecnicalsFilter.push(newFilterTecnical)
       setIsFilterCurrency(arrValidateTecnicalsFilter)
     }
-    console.log(listAssistentsTecnicals,"changeTecnicals",event.target.attributes['data-ref'].value)
     //unsetFilterPrimary()
 
   }catch(error){
@@ -315,7 +344,7 @@ const MapContextProvider = ({ children,orderId }) => {
           data.target.value !== '' ? data.target.value : ''
         valuesFilterPrimary.value = filtered !== '' ? filtered : ''
       }
-console.log("Filternpp")
+
       setFiltersPrimaryFormPreview({
         ...filtersPrimaryFormPreview,
         [field]: {
@@ -424,9 +453,9 @@ console.log("Filternpp")
 
 const resetScheduling = () => {
     let initialScheduling = {
-      period: 'morning',
+      period: '',
       dateScheduling: '',
-      schedulinglabel: 'Manhã'
+      schedulinglabel: ''
     }
 
     setScheduling(initialScheduling)
@@ -469,7 +498,24 @@ const resetScheduling = () => {
       setIsShowFilter(type)
     }
   }
-
+  const getTechnicals = async (filter) => {
+    var list = await fetch(`${serverPath}/api/tecnical`, {method: 'GET',headers: new Headers()});
+    list.json().then((data) => {  
+      if(filter.cep){      
+       getDistancia(data,filter.cep,filter.distance).then((dist) => {
+       })       
+      
+      }else{
+        if(filter.city){
+          setListAssistentsTecnicals(filterCity(data,filter.city))
+        }else{
+          setListAssistentsTecnicals(filterState(data,filter.state))
+        }
+      }
+    })    
+    setFiltersPrimaryFormPreview(FILTERS_PREVIEW_INIT)
+    console.log(filtersPrimaryFormPreview)
+  }
   const stateMap = {
     filtersAndTecnicals: {
       isFilterOpen,
@@ -497,7 +543,8 @@ const resetScheduling = () => {
       changeScheduling,
       validateAndSendScheduling,
       changeSchedulingDate,
-      resetScheduling
+      resetScheduling,
+      getTechnicals
     },
     filter: {
       isShowFilter,

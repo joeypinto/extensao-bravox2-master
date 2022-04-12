@@ -111,7 +111,6 @@ export default async (req, res) => {
           }
           res.status(201).json({ success: true })
         } catch (error) {
-          console.log(error,"error")
           res.status(400).json({ error: 'Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!' })
         }
         break

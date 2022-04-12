@@ -10,7 +10,7 @@ const UserContextProvider = ({ children }) => {
   const [userLogged, setUserLogged] = useState('')
   const [appointmentCancelForUser, setAppointmentCancelForUser] = useState(null)
   const [appointmentForReviewOrder, setAppointmentForReviewOrder] = useState([])
-
+  const [appointmentForInfoOrder, setAppointmentForInfoOrder] = useState([])
   useEffect(() => {
     const token = Cookies.get(USER_CONSTANTS.COOKIE_JWT)
 
@@ -59,6 +59,9 @@ const UserContextProvider = ({ children }) => {
   const setAppointmentForReview = (order) => {
     setAppointmentForReviewOrder(order)
   }
+  const setAppointmentForInfo = (order) => {
+    setAppointmentForInfoOrder(order)
+  }
 
   const StateUser = {
     userLogged,
@@ -66,8 +69,10 @@ const UserContextProvider = ({ children }) => {
     destroyeruser,
     setAppointmentForCancel,
     setAppointmentForReview,
+    setAppointmentForInfo,
     appointmentForReviewOrder,
-    appointmentCancelForUser
+    appointmentCancelForUser,
+    appointmentForInfoOrder
   }
 
   return (

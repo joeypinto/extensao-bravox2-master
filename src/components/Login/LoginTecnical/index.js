@@ -88,7 +88,7 @@ const LoginTechical = () => {
     if (key === 13) validateFields()
   }
   const createApi= (data) => {
-    fetch(`${serverPath}/api/tecnical`, {method: 'POST',body:JSON.stringify(data),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(response.body));
+    fetch(`${serverPath}/api/tecnical`, {method: 'POST',body:JSON.stringify(data),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(""));
   }
   return (
     <Styles.LoginWrapper>

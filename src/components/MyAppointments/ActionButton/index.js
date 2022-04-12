@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faStar,
   faCalendarCheck,
-  faTimesCircle
+  faTimesCircle,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons'
 import { GlobalContext } from 'contexts/globalContext'
 import { UserContext } from 'contexts/userContext'
@@ -18,7 +19,8 @@ const ActionButton = ({ data }) => {
     completed: 'Avaliar',
     canceled: 'Reagendar',
     pendenting: 'Agendar',
-    appointment: 'Reagendar'
+    appointment: 'Reagendar',
+    view: 'Detalhes'
   }
 
   const generateReview = (reviewNote) => {
@@ -52,7 +54,10 @@ const ActionButton = ({ data }) => {
     ctxUser.setAppointmentForCancel(data.idTray)
     ctxGlobal.toggleModalContainer('cancel')
   }
-
+  const infoAppointment = () => {  
+    ctxUser.setAppointmentForInfo(data)
+    ctxGlobal.toggleModalContainer('info')
+  }
   const reviewAppointment = () => {
     ctxUser.setAppointmentForReview(data)
     ctxGlobal.toggleModalContainer('review')
@@ -62,7 +67,7 @@ const ActionButton = ({ data }) => {
     router.push({
       pathname: `/mapa-de-agendamentos/${data.idTray}`,
       //query: { tid: data.tecnicalId }
-    })
+    }).then(() => {router.reload()})
   }
 
   return (
@@ -116,6 +121,14 @@ const ActionButton = ({ data }) => {
               )}
             </Styles.FragmentButton>
             {data.status === 'appointment' && (
+              <Styles.FragmentButton
+                className="info__appointment roundedStatus"
+                onClick={() => infoAppointment()}
+              >
+                <FontAwesomeIcon icon={faInfoCircle} size="1x" />
+                <span className="text__button">Informações</span>
+              </Styles.FragmentButton>
+            )}{data.status === 'appointment' && (
               <Styles.FragmentButton
                 className="cancel__appointment roundedStatus"
                 onClick={() => cancelAppointment()}

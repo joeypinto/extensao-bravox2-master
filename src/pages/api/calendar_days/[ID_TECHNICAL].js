@@ -19,7 +19,9 @@ export default async (req, res) => {
         ]
       })
       .toArray()
-    res.json(calendar)
+    console.log('CALENDAR.date' + getSunday(7 * week))
+      res.json(calendar)
+
   } catch (error) {
     res.status(400).send({ error: 'O servidor não entendeu a requisição pois está com uma sintaxe inválida.' })
   }

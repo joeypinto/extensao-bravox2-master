@@ -887,7 +887,7 @@ export const INSTALLATIONS_CONFIRMED_LIST = [
 export const CALENDAR_DAYS = [
   {
     id: 1,
-    weekDay: 'Domingo',
+    dayWeek: 'Domingo',
     date:getSunday(0),
     scheduledPeriods: [
       {
@@ -909,7 +909,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 2,
-    weekDay: 'Segunda-feira',
+    dayWeek: 'Segunda-feira',
     date:getSunday(1),
     scheduledPeriods: [
       {
@@ -931,7 +931,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 3,
-    weekDay: 'Terça-feira',
+    dayWeek: 'Terça-feira',
     date:getSunday(2),
     scheduledPeriods: [
       {
@@ -953,7 +953,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 4,
-    weekDay: 'Quarta-feira',
+    dayWeek: 'Quarta-feira',
     date:getSunday(3),
     scheduledPeriods: [
       {
@@ -975,7 +975,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 5,
-    weekDay: 'Quinta-feira',
+    dayWeek: 'Quinta-feira',
     date:getSunday(4),
     scheduledPeriods: [
       {
@@ -997,7 +997,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 6,
-    weekDay: 'Sexta-feira',
+    dayWeek: 'Sexta-feira',
     date:getSunday(5),
     scheduledPeriods: [
       {
@@ -1019,7 +1019,7 @@ export const CALENDAR_DAYS = [
   },
   {
     id: 7,
-    weekDay: 'Sábado',
+    dayWeek: 'Sábado',
     date:getSunday(6),
     scheduledPeriods: [
       {

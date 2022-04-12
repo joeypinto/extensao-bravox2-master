@@ -19,7 +19,6 @@ export default async (req, res) => {
               }
               var resOrden = []
               order.forEach(element => {
-                console.log(element)
                 resOrden.push({
                   idTechnical: element.tecnicalId,
                   purchaseNumber: element.idTray,

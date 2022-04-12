@@ -84,7 +84,7 @@ const TecnicalAssistentList = () => {
       <Styles.HeaderTecnical>
         <Styles.HeaderTecnicalList>
           <Styles.HeaderTecnicalItem>
-            {FiltersContext.isFilterCurrency.length > 0 &&
+            {/* {FiltersContext.isFilterCurrency.length > 0 &&
               searchFilterCEP(FiltersContext.isFilterCurrency) && (
                 <Styles.ButtonFilterTecnical
                   className={`${
@@ -101,9 +101,9 @@ const TecnicalAssistentList = () => {
                 >
                   Mais próximas
                 </Styles.ButtonFilterTecnical>
-              )}
+              )} */}
 
-            <Styles.ButtonFilterTecnical
+            {/* <Styles.ButtonFilterTecnical
               className={`${
                 FiltersContext.filterTecnicalsSelected === 'faster' &&
                 'is__selected'
@@ -117,7 +117,7 @@ const TecnicalAssistentList = () => {
               onClick={(e) => FiltersContext.changeTecnicalsSelect(e)}
             >
               Mais Rápido
-            </Styles.ButtonFilterTecnical>
+            </Styles.ButtonFilterTecnical> */}
           </Styles.HeaderTecnicalItem>
           <Styles.HeaderTecnicalItem>
             <Styles.ButtonFilterChange

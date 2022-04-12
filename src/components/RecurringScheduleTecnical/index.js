@@ -4,13 +4,13 @@ import { SchedulingContext } from 'contexts/schedulingContext'
 
 const RecurringScheduleTecnical = ({ scheduling, ...props }) => {
   const ctxScheduling = useContext(SchedulingContext)
-
+console.log(scheduling.dayWeek)
   return (
     <Styles.ScheduleWrapper action="#">
       <Styles.ScheduleTitleDay>
-        {scheduling.weekDay === '' || scheduling.weekDay === null
+        {scheduling.dayWeek === '' || scheduling.dayWeek === null
           ? 'Informações indisponíveis'
-          : scheduling.weekDay}
+          : scheduling.dayWeek}
       </Styles.ScheduleTitleDay>
       <Styles.ScheduleContentWrapper>
         {scheduling.scheduledPeriods.length > 0 &&

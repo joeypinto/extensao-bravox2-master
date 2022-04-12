@@ -87,7 +87,7 @@ export async function getServerSideProps(context) {
       notFound: true,
     }
   }
-
+ 
   const returnAPIOrders = TECHNICAL_SERVICES_SCHEDULES.filter((order) => {
     return order.idTechnical === idTechnical
   })

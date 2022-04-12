@@ -129,6 +129,8 @@ const ModalModifyOrder = () => {
                 >
                   {listDataAvaliable(ctxScheduling.daysOfTechnical).map(
                     (day) => {
+                      var today = new Date();
+                      if(day.day.substring(8) >= today.getDate())
                         return (
                           <option
                             value={day.day}

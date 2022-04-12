@@ -20,7 +20,6 @@ const TecnicalAssistentItem = ({ assistent }) => {
     FiltersContext.assistentsTecnicaslSelected === assistent.ID &&
       refList.current.focus()
   }, [FiltersContext.assistentsTecnicaslSelected])
-console.log(assistent)
   return (
     <Styles.ListTecnicalsItem
       ref={refList}
@@ -60,7 +59,9 @@ console.log(assistent)
             <Styles.TecnicalItemInfoReviewText>
               Avaliação ({assistent.reviews_total}):{' '}
               <strong>
-                {String((assistent.reviews_avarage / assistent.reviews_total).toFixed(1)).replace('.', ',')}
+                {
+                assistent.reviews_total == 0 ? " 0 " : String((assistent.reviews_avarage / assistent.reviews_total).toFixed(1)).replace('.', ',')
+                }
               </strong>
             </Styles.TecnicalItemInfoReviewText>
             <Styles.TecnicalItemInfoReviewIcons>

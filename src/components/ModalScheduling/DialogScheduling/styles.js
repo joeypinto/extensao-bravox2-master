@@ -59,12 +59,12 @@ export const FooterLegend = styled.ul`
     wrap: 'wrap'
   })}
   margin-top: 1rem;
-
+  margin-top: 5px;
   @media (min-width: 767px) {
     align-items: flex-start;
     justify-content: flex-start;
     padding-left: 1rem;
-    margin-top: 0;
+    margin-top: 5px;
   }
 `
 

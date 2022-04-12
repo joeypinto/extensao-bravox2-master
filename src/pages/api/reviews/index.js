@@ -25,7 +25,6 @@ export default async (req, res) => {
         case 'POST':
             try {
               delete req.body.order['_id']
-              console.log(req.body.tecnicalId)
               const order = await collectionOrder.replaceOne({idTray: req.body.order.idTray} , req.body.order)
               const technical = await collectionTechnical.findOne({ ID: parseInt(req.body.order.tecnicalId)})
               if(!!technical){
@@ -34,7 +33,6 @@ export default async (req, res) => {
               delete technical['_id']
               technical = await collectionTechnical.replaceOne({ ID: parseInt(req.body.order.tecnicalId)},technical)
               }
-              console.log(technical)
                 res.status(201).json({ success: true })
             } catch (error) {
               res.status(400).json({ error: 'Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!' })

@@ -74,8 +74,8 @@ const ModalConfirmInstallation = () => {
     order["hours"] = hours
     order["minutes"] = minutes
     await fetch(`${serverPath}/api/maintenance`, {method: 'POST',body:JSON.stringify({order:order}),headers: new Headers({'Content-Type': 'application/json'})});
-    router.push(`/oficinas-credenciadas/confirmar-instalacao`)
-    ctxGlobal.toggleModalContainer('init')
+    router.reload()
+    
   }
 
   return (

@@ -49,7 +49,6 @@ export default async (req, res) => {
            const todo = await getCalendar(eltechnical.ID)
            eltechnical['calenderTecnical'] = todo
          }
-        console.log(technical)
         res.status(201).json(technical)
       } catch (error) {
         res.status(400).send({ error: 'O servidor não entendeu a requisição pois está com uma sintaxe inválida.' })

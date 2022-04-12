@@ -2,6 +2,8 @@ import ActionButton from './ActionButton'
 import ModalCancel from 'components/ModalCancel'
 import ModalReview from 'components/ModalReview'
 import * as Styles from './styles'
+import { convertPeriod } from 'utils'
+import ModalInfo from 'components/ModalInfo'
 
 const MyAppointments = ({ appointmentsCurrency }) => {
   const classNameForText = {
@@ -14,11 +16,12 @@ const MyAppointments = ({ appointmentsCurrency }) => {
   const formatedData = (date) => {
     return date.substring(8,10)+"/"+ date.substring(5,7) +"/" + date.substring(0,4)
   }
-
+ console.log(appointmentsCurrency , "appointments")
   return (
     <Styles.MyAppointmentsWrapper>
       <ModalCancel />
       <ModalReview />
+      <ModalInfo />
       <Styles.HeaderAppointments>
         <h2 className="header__item">Código do Pedido</h2>
         <h2 className="header__item">Status do Agendamento</h2>
@@ -43,7 +46,8 @@ const MyAppointments = ({ appointmentsCurrency }) => {
                     'Pendente de agendamento'}
                   {appointment.status === 'canceled' && 'Cancelado'}
                   {appointment.status === 'appointment' &&
-                    `Agendado | ${formatedData(appointment.dateChance)}`}
+                    `Agendado | ${formatedData(appointment.dateChance)} - Período da ${convertPeriod(appointment.period)}`}
+                    
                 </Styles.FragmentStatus>
               </div>
               <div className="appointment__fragment">

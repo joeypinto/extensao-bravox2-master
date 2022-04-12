@@ -54,6 +54,7 @@ const DialogScheduling = ({ tecnicalData }) => {
   const ctxGlobal = useContext(GlobalContext)
   const router = useRouter()
   const [dateSendProduct, setDateSendProduct] = useState('')
+  const [dateActive, setDateActive] = useState(false)
   const [notifyError, setNotifyError] = useState(INITIAL_NOTIFY_ERROR)
   const [periodTecnical, setPeriodTecnical] = useState([])
   const [dateSelect, setDateSelect] = useState(new Date())
@@ -195,7 +196,11 @@ const DialogScheduling = ({ tecnicalData }) => {
           return 'night'
         }
  }
-  const changeDateState = (date) => {
+ const chageButton = (e) => {
+  ctxContext.changeScheduling('period', e);
+  setDateActive(true);
+}
+  const changeDateState = (date) => { 
     ctxContext.resetScheduling()
     let validate = validateDatesAndAssignCorrespondingClasses(date)
 
@@ -229,6 +234,7 @@ const DialogScheduling = ({ tecnicalData }) => {
           onClick={() => {
             ctxGlobal.toggleModalContainer('init')
             ctxContext.openDialogConfirmed()
+            setDateActive(false);
           }}
         >
           <FontAwesomeIcon icon={faTimes} size="lg" />
@@ -264,7 +270,7 @@ const DialogScheduling = ({ tecnicalData }) => {
               ) === 'avaliable') ? (
               <Styles.DialogSelect
                 id="selectPeriod"
-                onClick={(e) => ctxContext.changeScheduling('period', e)}
+                onClick={(e) => chageButton(e)}
               >
                 {periodTecnical.map((period, index) => {
                   return (
@@ -305,7 +311,7 @@ const DialogScheduling = ({ tecnicalData }) => {
                 : ctxContext.scheduling.schedulinglabel}
             </Styles.ConfirmedInfoDate>
           </Styles.ConfirmedInfo>
-          <Styles.Confirmedbutton type="button"
+          <Styles.Confirmedbutton type="button"  disabled={!dateActive}
           onClick={(e) => {
           try {
             var order = ctxContext.order

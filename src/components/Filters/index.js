@@ -67,7 +67,6 @@ const Filters = () => {
   }
 
   const handleSetFiltersPrimary = async () => {
-console.log(FiltersContext.filtersPrimaryFormPreview,"handleSetFiltersPrimary")
     const filtersCurrency = FiltersContext.filtersPrimaryFormPreview
     if (
       filtersCurrency.filterPrimaryCep.filterValue === '' &&
@@ -94,23 +93,18 @@ console.log(FiltersContext.filtersPrimaryFormPreview,"handleSetFiltersPrimary")
         globalCtx.toggleModalContainer('alert')
         setDistanceNotify(true)
       } else {
-        FiltersContext.setFiltersPrimary()
-        setDistanceNotify(false)
+        let filter = {cep:filtersCurrency.filterPrimaryCep.filterLabel,
+        distance:filtersCurrency.filterPrimaryDistance.filterLabel,
+        state : filtersCurrency.filterPrimaryState.filterLabel,
+        city : filtersCurrency.filterPrimaryCity.filterLabel}
+      
+      FiltersContext.getTechnicals(filter)
+      FiltersContext.setFilter()     
+      FiltersContext.setFiltersPrimary()
+      setDistanceNotify(false)
       }
     }
-//Bloco Feito pelo backend ainda sera migrado
-    if(filtersCurrency.filterPrimaryState.filterValue !== ''){
-    if(filtersCurrency.filterPrimaryCity.filterValue !== ''){
-      const city = filtersCurrency.filterPrimaryCity.filterLabel
-      const state = filtersCurrency.filterPrimaryState.filterLabel
-      var list = await fetch(`${serverPath}/api/tecnical/search?city=${city}&state=${state}`, {method: 'GET',headers: new Headers({'Content-Type': 'application/json'})});
-      list = await list.json()
-      FiltersContext.setListAssistentsTecnicals(list)
-    }
-    }
-    //fim do bloco
-
-
+    
   }
 
   useEffect(() => {

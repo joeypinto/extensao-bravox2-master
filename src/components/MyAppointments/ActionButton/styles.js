@@ -82,4 +82,8 @@ export const FragmentButton = styled.button`
     background-color: ${(props) => props.theme.colors.alertModal.bgColor};
     color: ${(props) => props.theme.colors.alertModal.fontColor};
   }
+  &.info__appointment {
+    background-color: ${(props) => props.theme.colors.infoModal.bgColor};
+    color: ${(props) => props.theme.colors.infoModal.fontColor};
+  }
 `

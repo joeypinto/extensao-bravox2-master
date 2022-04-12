@@ -27,6 +27,10 @@ export const themeDefault = {
       bgColor: '#d4c073',
       fontColor: '#343434'
     },
+    infoModal: {
+      bgColor: '#347DFA',
+      fontColor: '#fff'
+    },
     subtitle: {
       daySelected: '#347DFA',
       daySuccess: '#39A47A',

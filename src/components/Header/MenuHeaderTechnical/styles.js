@@ -13,7 +13,7 @@ export const NavTechnicalWrapper = styled.nav`
 export const NavListMenu = styled.ul`
   width: 100%;
   ${Flex({
-    justifyContent: 'center'
+    justifyContent: 'flex-end'
   })}
 `
 
