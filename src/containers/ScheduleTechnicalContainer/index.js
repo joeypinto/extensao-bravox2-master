@@ -13,7 +13,7 @@ const ScheduleTechnicalContainer = () => {
     <>
       {ctxScheduling.scheduling.length > 0 &&
         ctxScheduling.scheduling.map((schedule, index) => {
-          console.log(schedule)
+
           return (
             <RecurringScheduleTecnical
               scheduling={schedule}

@@ -20,7 +20,6 @@ const ModalInfo = () => {
     const order = ctxUser.appointmentForInfoOrder;
     const list = await fetch(`${serverPath}/api/tecnical`, {method: 'GET',headers: new Headers({'Content-Type': 'application/json'})});
     const TECNICALS_API = await list.json();
-    console.log(TECNICALS_API,"sa")
    //irá consultar a api da teia para saber qual é a Assistência técnica
    //Se existir faz a execução a abaixo caso não ai ele fara um modal surgir
    TECNICALS_API.map((tecnical) => {

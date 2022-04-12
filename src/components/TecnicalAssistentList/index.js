@@ -121,7 +121,11 @@ const TecnicalAssistentList = () => {
           </Styles.HeaderTecnicalItem>
           <Styles.HeaderTecnicalItem>
             <Styles.ButtonFilterChange
-              onClick={() => FiltersContext.setFilter()}
+              onClick={() => setTimeout(() => {
+                FiltersContext.setFilter()
+                FiltersContext.clearFilters()
+              }, 300)                
+              }
             >
               <FontAwesomeIcon icon={faFilter} />
               Filtro

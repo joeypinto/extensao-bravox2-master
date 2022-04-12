@@ -4,7 +4,6 @@ import { SchedulingContext } from 'contexts/schedulingContext'
 
 const RecurringScheduleTecnical = ({ scheduling, ...props }) => {
   const ctxScheduling = useContext(SchedulingContext)
-console.log(scheduling.dayWeek)
   return (
     <Styles.ScheduleWrapper action="#">
       <Styles.ScheduleTitleDay>

@@ -19,7 +19,6 @@ export default async (req, res) => {
         ]
       })
       .toArray()
-    console.log('CALENDAR.date' + getSunday(7 * week))
       res.json(calendar)
 
   } catch (error) {

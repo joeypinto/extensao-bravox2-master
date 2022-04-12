@@ -11,9 +11,12 @@ import { serverPath } from './../../utils/index';
 const Filters = () => {
   const [distanceFilterVisible, setDistanceFilterVisible] = useState(false)
   const [distanceNotify, setDistanceNotify] = useState(false)
+  const [mask, setMask] = useState("")
+  const [select, setSelect] = useState("")
   const context = useContext(MapContext)
   const globalCtx = useContext(GlobalContext)
   const FiltersContext = context.filtersAndTecnicals
+ 
 
   const filtredStates = (states) => {
     if (states.length === 0) {
@@ -102,6 +105,9 @@ const Filters = () => {
       FiltersContext.setFilter()     
       FiltersContext.setFiltersPrimary()
       setDistanceNotify(false)
+      setMask("")
+      setSelect("")
+      setDistanceFilterVisible(false)
       }
     }
     
@@ -140,9 +146,11 @@ const Filters = () => {
             context.filter.isShowFilter === 'choosing') && (
             <Styles.FilterWrapperFields>
               <Styles.FilterLabel htmlFor="txt_cep">Cep</Styles.FilterLabel>
-              <InputMask
+              <InputMask  
+                value={mask}            
                 mask="99999-999"
-                onChange={(e) => {
+                onChange={(e) => {                  
+                  setMask(e.target.value)    
                   let cepFormated = e.target.value
                     .replace(/-/g, '')
                     .replace(/_/g, '')
@@ -165,7 +173,7 @@ const Filters = () => {
                   }
                 }}
               >
-                {(inputProps) => (
+                {(inputProps) => (                  
                   <Styles.FilterInput
                     {...inputProps}
                     type="text"
@@ -200,7 +208,7 @@ const Filters = () => {
                   }
                 }}
               >
-                <option value="">Escolha um estado</option>
+                <option value={select}>Escolha um estado</option>
                 {FiltersContext.listAssistentsTecnicalsFiltred.length > 0 &&
                   filtredStates(FiltersContext.listAssistentsTecnicalsFiltred)}
 

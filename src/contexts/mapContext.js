@@ -169,7 +169,6 @@ const MapContextProvider = ({ children,orderId }) => {
     const CepCoords = require('coordenadas-do-cep')
     return CepCoords.getByCep(cep)
       .then((info) => {
-        console.log(info)
         const coordenateUser = point([info.lon, info.lat])
         //retorna o mesmo 'info' da versão em promise
         let listAT = listTecnicals.filter((tecnical) => {
@@ -181,7 +180,6 @@ const MapContextProvider = ({ children,orderId }) => {
             ...tecnical,
             distance: distance(coordenateUser, coordenateTecnical, options)
           }
-          console.log(filterState)
           if(filterState == '20km'){
             if(previewTecnical.distance <= 20){
               return previewTecnical
@@ -195,7 +193,6 @@ const MapContextProvider = ({ children,orderId }) => {
             return previewTecnical
           }          
         })
-        console.log(listAT) 
         setListAssistentsTecnicals(listAT)     
         }).catch((err) => {
           //retorna o mesmo parâmetro 'err' da versão em promise
@@ -225,7 +222,6 @@ const MapContextProvider = ({ children,orderId }) => {
     let filterState = filtersCurrency
     
     let newListTecnicals = listTecnicals.filter((item) => {
-            console.log(item.ESTADO,"const",filterState)
             return item.ESTADO === filterState
           })
     return newListTecnicals
@@ -482,7 +478,13 @@ const resetScheduling = () => {
       setIsFilterOpen(MAP_CONSTANTS.MAP_FILTER_TECNICALS)
     }
   }
-
+  const clearFilters = async () => {
+    var list = await fetch(`${serverPath}/api/tecnical`, {method: 'GET',headers: new Headers()});
+    list.json().then((data) => {
+      setListAssistentsTecnicals(data)})
+      setFiltersPrimaryFormPreview(FILTERS_PREVIEW_INIT)
+      setIsFilterCurrency([])      
+  }
   const setFiltersShowInMobile = () => {
     setIsOpenFiltersMobile(!isOpenFiltersMobile)
   }
@@ -513,8 +515,6 @@ const resetScheduling = () => {
         }
       }
     })    
-    setFiltersPrimaryFormPreview(FILTERS_PREVIEW_INIT)
-    console.log(filtersPrimaryFormPreview)
   }
   const stateMap = {
     filtersAndTecnicals: {
@@ -544,7 +544,8 @@ const resetScheduling = () => {
       validateAndSendScheduling,
       changeSchedulingDate,
       resetScheduling,
-      getTechnicals
+      getTechnicals,
+      clearFilters
     },
     filter: {
       isShowFilter,

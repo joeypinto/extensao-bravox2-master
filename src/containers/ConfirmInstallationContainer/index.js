@@ -3,7 +3,7 @@ import Pagination from 'components/Pagination'
 import SearchItems from 'components/SearchItems'
 
 const ConfirmInstallationContainer = ({ data, pagination, typeRef }) => {
-  console.log(data)
+
   return (
     <>
       <SearchItems preRoute={'/oficinas-credenciadas/confirmar-instalacao'} />

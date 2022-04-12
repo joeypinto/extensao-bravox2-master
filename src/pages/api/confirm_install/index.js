@@ -16,7 +16,6 @@ export default async (req, res) => {
               }else{
                order = await collectionOrder.find({$and:[{ "tecnicalId": parseInt(req.query.idTechnical)}, {"status":"appointment"} ] }).toArray();
               }
-              console.log(order + "------")
               res.status(200).json(order)
             } catch (error) {
               res.status(400).send({ error: 'O servidor não entendeu a requisição pois está com uma sintaxe inválida.' })
