@@ -84,17 +84,23 @@ const LoginTechical = () => {
 
   const sendInformations = (e) => {
     const key = e.keyCode
-
     if (key === 13) validateFields()
   }
   const createApi= (data) => {
-    fetch(`${serverPath}/api/tecnical`, {method: 'POST',body:JSON.stringify(data),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(""));
+    fetch(`${serverPath}/api/tecnical`, {method: 'POST',body:JSON.stringify(data),headers: new Headers({'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"})}).then((response) => console.log(""));
   }
+  const handleSubmit = event => {
+    event.preventDefault();
+            validateFields()
+  };
+
   return (
     <Styles.LoginWrapper>
       <Styles.LoginContent>
-        <Styles.LoginForm action="#" onKeyUp={(e) => sendInformations(e)}>
-          <Styles.FormHeader>
+      <Styles.LoginForm
+          action="#"
+          onSubmit={handleSubmit}          
+        > <Styles.FormHeader>
             <Styles.FormHeaderTitle>
               Consultar solicitações de instalação
             </Styles.FormHeaderTitle>
@@ -126,8 +132,7 @@ const LoginTechical = () => {
                 Voltar
               </Styles.FormButtonBack>
               <Styles.FormButtonContinue
-                type="button"
-                onClick={() => validateFields()}
+                type="submit"                
               >
                 Continuar
                 <FontAwesomeIcon icon={faAngleDoubleRight} size="lg" />
