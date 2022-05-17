@@ -156,7 +156,76 @@ export const getSunday = (value) =>{
   today.setDate(today.getDate() - today.getDay() + value)
   return today.toISOString().slice(0, 10);
 }
+export const getInitialWeek = (value) =>{
+  var dateInitial = new Date();
+  var dateFinal = new Date();
+  dateInitial.setDate(dateInitial.getDate() - dateInitial.getDay() + value)
+  dateFinal.setDate((dateFinal.getDate() - dateFinal.getDay() + value)+6)
+  return {dateInitial:dateInitial.toISOString().slice(0, 10), dateFinal:dateFinal.toISOString().slice(0, 10)};
+}
+export const getCalendarDays = (value) =>{
+  const scheduledPeriods = [
+    {
+      id: 1,
+      period: 'Manhã',
+      amount: 0
+    },
+    {
+      id: 2,
+      period: 'Tarde',
+      amount: 0
+    },
+    {
+      id: 3,
+      period: 'Noite',
+      amount: 0
+    }
+  ]
+
+  return [{
+    id: 1,
+    dayWeek: 'Domingo',
+    date:getSunday(0 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 2,
+    dayWeek: 'Segunda-feira',
+    date:getSunday(1 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 3,
+    dayWeek: 'Terça-feira',
+    date:getSunday(2 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 4,
+    dayWeek: 'Quarta-feira',
+    date:getSunday(3 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 5,
+    dayWeek: 'Quinta-feira',
+    date:getSunday(4 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 6,
+    dayWeek: 'Sexta-feira',
+    date:getSunday(5 + value),
+    scheduledPeriods: scheduledPeriods
+  },
+  {
+    id: 7,
+    dayWeek: 'Sábado',
+    date:getSunday(6 + value),
+    scheduledPeriods: scheduledPeriods
+  }]
+}
 const dev = process.env.NODE_ENV !== 'production';
 //export const serverPath = dev ? 'http://localhost:3000' : 'https://bravox-app.herokuapp.com';
-export const serverPath = 'https://extensao-bravox2-master.vercel.app'
-//export const serverPath = 'http://localhost:3000'
+//export const serverPath = 'https://extensao-bravox2-master.vercel.app'
+export const serverPath = 'http://localhost:3000'
