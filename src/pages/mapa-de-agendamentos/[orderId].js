@@ -3,10 +3,6 @@ import MapContainer from 'containers/MapContainer'
 import { serverPath } from './../../utils/index';
 
 //...
-
-
-
-
 //Nessa página tem que entrar somente ORDERs que tem os seguintes estados
 //Cancelado, null ou pendente
 // Quando um valor vem até essa página ele segue tres lógicas
@@ -14,7 +10,8 @@ import { serverPath } from './../../utils/index';
 // se for cancelado ele atualiza como pendente de agendamento.
 // se for pendente não precisa fazer lógica
 
-const map = (props) => {
+const map = (props) => {  
+
   return (
     <UserTemplate
       headers={{

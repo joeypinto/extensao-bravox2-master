@@ -66,7 +66,7 @@ const SchedulingContextProvider = ({ children }) => {
   }
 
   const saveSchedulingEditions = (value) => {
-    fetch(`${serverPath}/api/calendar_days`, {method: 'POST',body:JSON.stringify({ID_TECHNICAL:children.props.value.idTechnical,CALENDAR:value}),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(""));
+    fetch(`${serverPath}/api/calendar_fixed`, {method: 'POST',body:JSON.stringify({ID_TECHNICAL:children.props.value.idTechnical,CALENDAR:value}),headers: new Headers({'Content-Type': 'application/json'})}).then((response) => console.log(""));
     GlobalCtx.setInformationsModal({
       title: 'Cadastrado com sucesso!',
       body: '<p>A agenda da semana foi cadastrada com sucesso!</p>',
@@ -91,11 +91,11 @@ const SchedulingContextProvider = ({ children }) => {
         }
     setOrderSelected(data)
   }
-const getCalendar = () =>{
-  return fetch(`${serverPath}/api/calendar_days/${children.props.value.idTechnical}`, {method: 'GET'}).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+const getCalendar = () =>{  
+  return fetch(`${serverPath}/api/calendar_fixed/?ID_TECHNICAL=${children.props.value.idTechnical}`, {method: 'GET'}).then(r =>  r.json().then(data => ({status: r.status, body: data})))
   .then(obj => {
-    try {
-      return obj.body[0].CALENDAR
+    try { 
+      return obj.body; 
     } catch (error) {
       return CALENDAR_DAYS
     }

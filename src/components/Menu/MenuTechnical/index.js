@@ -5,15 +5,16 @@ const MenuTechnical = ({ pageCurrency }) => {
     <Menu
       titleMenu="Oficinas Credenciadas"
       linksMenu={[
-        {
-          link: `/oficinas-credenciadas/agenda-recorrente`,
-          slug: 'RecurringScheduleTecnical',
-          label: 'Agenda recorrente'
-        },
+      
         {
           link: `/oficinas-credenciadas/manutencao-da-agenda`,
           slug: 'MaintenanceTechnicalSchedule',
           label: 'Manutenção da agenda recorrente'
+        },
+        {
+          link: `/oficinas-credenciadas/agenda-recorrente`,
+          slug: 'RecurringScheduleTecnical',
+          label: 'Definir Agenda Base'
         },
         {
           link: `/oficinas-credenciadas/manutencao-da-agenda-instalacoes`,

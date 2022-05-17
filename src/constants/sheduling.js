@@ -51,7 +51,44 @@ export const CLASSES_DATE_PICKER = {
 }
 
 export const DAYS_WEEK = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
-
+export const LEGENDS_WEEK = [
+  {
+    id: 1,
+    classLegend: 'Dom',
+    legend: 'Domingo'
+  },
+  {
+    id: 2,
+    classLegend: 'Seg',
+    legend: 'Segunda-feira'
+  },
+  {
+    id: 3,
+    classLegend: 'Ter',
+    legend: 'Terça-feira'
+  },
+  {
+    id: 4,
+    classLegend: 'Qua',
+    legend: 'Quarta'
+  },
+  {
+    id: 5,
+    classLegend: 'Qui',
+    legend: 'Quinta'
+  },
+  {
+    id: 6,
+    classLegend: 'Sex',
+    legend: 'Sexta-Feira'
+  },
+  {
+    id: 7,
+    classLegend: 'Sab',
+    legend: 'Sabado'
+  }
+  
+]
 export const WEEK_LIST = [
   {
     id: 1,

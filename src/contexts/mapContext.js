@@ -129,6 +129,7 @@ const MapContextProvider = ({ children,orderId }) => {
     //Lista de assistencias tecnicas pela api
     var list = await fetch(`${serverPath}/api/tecnical`, {method: 'GET',headers: new Headers()});
     list.json().then((data) => {
+      console.log(data,"filtes")
 
       setListAssistentsTecnicals(data)})
 

@@ -19,6 +19,7 @@ registerLocale('pt-BR', ptBR)
 
 //Formatar para extrair o string necessário do DatePicker
 const extractDataPicker = (dateRaw) => {
+
   const date = new Date(dateRaw)
 
   return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
@@ -70,13 +71,14 @@ const DialogScheduling = ({ tecnicalData }) => {
 
   //Avalia datas validas
   const validateDate = (dataToValidate) => {
-    let listOfValidDates = tecnicalData.calenderTecnical.filter((validate) => {
+    
+    let listOfValidDates = tecnicalData.calenderTecnical.filter((validate) => {      
       return (
         formatDateToValidate(validate.dateCalender) ===
         formatDateToValidate(dataToValidate)
       )
     })
-
+    console.log(tecnicalData,"validateDate")
     return listOfValidDates
   }
 
@@ -135,43 +137,13 @@ const DialogScheduling = ({ tecnicalData }) => {
     const dateIsValid = formatDateToValidate(date)
     const dateSendOrder = formatDateToValidate(dateSendProduct)
     const today = new Date()
-    const todyIsBiggestDateCalender =
-      new Date(formatDateStringToBar(date)) < today
-
-    if (
-      new Date(formatDateStringToBar(dateIsValid)).getMonth() < today.getMonth()
-    ) {
-      //Verifica se está dentro do mês
-      return CLASSES_DATE_PICKER.DONT_MONTH_CURRENCY
-    } else if (todyIsBiggestDateCalender) {
-      //Verifica se o dia é após o dia atual
-      return CLASSES_DATE_PICKER.DISABLED
-    } else if (
-      dateIsValid === dateSendOrder &&
-      validateDate(dateSendOrder).length <= 0
-    ) {
-      //Verifica se o dia é após o dia atual
-      return CLASSES_DATE_PICKER.NO_DATE_SEND_PRODUCT
-    } else if (
-      dateIsValid === dateSendOrder &&
-      validateDate(dateSendOrder).length > 0
-    ) {
-      //Verifica se o dia é exatamente igual o dia da entrega do pedido
-      return CLASSES_DATE_PICKER.DATE_SEND_PRODUCT
-    } else if (
-      new Date(formatDateStringToBar(dateIsValid)) < today ||
-      new Date(formatDateStringToBar(dateIsValid)) <
-        new Date(formatDateStringToBar(dateSendOrder))
-    ) {
-      //Verifica se a data é anterior a de hoje ou anterior a data de envio
-      return CLASSES_DATE_PICKER.DISABLED
-    } else if (validateDate(dateIsValid).length > 0) {
+    
+    if (validateDate(dateIsValid).length > 0) {
+      console.log(today)
       //Verifica se a data é válida
       return CLASSES_DATE_PICKER.AVALIABLE
-    } else {
-      //Caso passe por todas essas validações desabilita
-      return CLASSES_DATE_PICKER.UNVALIABLE
     }
+   
   }
 
   const validPeriods = (selectedDate) => {
