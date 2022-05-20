@@ -9,10 +9,9 @@ export default async (req, res) => {
         case 'POST':
             try {
               var response = req.body
-              console.log(req.body)
-              response.CALENDAR.map(async val=>{                
-                val['ID_TECHNICAL'] = response.ID_TECHNICAL                
-                var calendar = await collection.findOne({ $and: [{ "ID_TECHNICAL": response.ID_TECHNICAL}, {"date":val.date}]})            
+              response.CALENDAR.map(async val=>{
+                val['ID_TECHNICAL'] = response.ID_TECHNICAL
+                var calendar = await collection.findOne({ $and: [{ "ID_TECHNICAL": response.ID_TECHNICAL}, {"date":val.date}]})
                 if(!calendar){
                   calendar = await collection.insertOne(val)
                 }else{

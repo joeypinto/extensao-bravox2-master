@@ -13,7 +13,7 @@ const SchedulingMaintenceProvider = ({ children }) => {
   const GlobalCtx = useContext(GlobalContext)
   const router = useRouter()
   useEffect( async() =>  {
-    const calendar = await getCalendar();  
+    const calendar = await getCalendar();
     setSchedulingMaintenceDates(calendar)
   }, [])
 
@@ -51,7 +51,6 @@ const SchedulingMaintenceProvider = ({ children }) => {
     console.log(dayPosition, periodPosition, value)
     const previewData = schedulingMaintenceDates.map((day, index) => {
       if (index === dayPosition) {
-        console.log(day, index)
         day.scheduledPeriods[periodPosition].amount = value
       }
       return day
@@ -68,6 +67,7 @@ const SchedulingMaintenceProvider = ({ children }) => {
 const getCalendar = () =>{
   return fetch(`${serverPath}/api/calendar_days/${children.props.value.idTechnical}?Week=${weekSelected}`, {method: 'GET'}).then(r =>  r.json().then(data => ({status: r.status, body: data})))
   .then(obj => {
+    console.log("aqui",obj.body)
       return obj.body;
   });
 }

@@ -1,4 +1,5 @@
 import connectToDatabase from 'config/mongodb'
+import calendar_days from '../calendar_days'
 const PERIODS = {
   Manhã: {
     value: 'morning'
@@ -40,27 +41,29 @@ export default async (req, res) => {
     case 'POST':
       try {
         delete req.body.order['_id']
-
-        var calendar = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"CALENDAR.date":req.body.order.dateChance} ] })
+        var calendar = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"date":req.body.order.dateChance} ] })
+        var period = getPeriod(req.body.order.period)
         var day = new Date(req.body.order.dateChance)
         var period = getPeriod(req.body.order.period)
 
-        if(calendar.CALENDAR[day.getDay()].scheduledPeriods[period].amount <= 0){
+        if(calendar.scheduledPeriods[period].amount <= 0){
           throw new Error('Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!');
         }else{
-          calendar.CALENDAR[day.getDay()].scheduledPeriods[period].amount -= 1
+          calendar.scheduledPeriods[period].amount -= 1
         }
         var order = await collectionOrder.findOne({
           idTray: req.body.order.idTray
         })
 
         if (order.status !== 'completed') {
-          order = await collectionOrder.replaceOne(
-            { idTray: req.body.order.idTray },
-            req.body.order
-          )
+          if(order.status == 'appointment'){
+            var calendarOld = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"date":order.dateChance} ] })
+            calendarOld.scheduledPeriods[getPeriod(order.period)].amount = calendar.scheduledPeriods[getPeriod(order.period)].amount + 1
+            await collectionCalendar.replaceOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"date":order.dateChance} ] },calendarOld)
+          }
+          order = await collectionOrder.replaceOne({ idTray: req.body.order.idTray },req.body.order)
           delete calendar['_id']
-          await collectionCalendar.replaceOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"CALENDAR.date":req.body.order.dateChance} ] },calendar)
+          await collectionCalendar.replaceOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"date":req.body.order.dateChance} ] },calendar)
         }else{
           throw new Error('Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!');
         }
@@ -82,17 +85,18 @@ export default async (req, res) => {
       break
       case 'PUT':
         try {
-          var calendar = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.technical}, {"CALENDAR.date":req.body.date} ] })
+          var calendar = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.technical}, {"date":req.body.date} ] })
           var day = new Date(req.body.date)
           var period = getPeriod(req.body.period)
-          if(calendar.CALENDAR[day.getDay()].scheduledPeriods[period].amount <= 0){
+          if(calendar.scheduledPeriods[period].amount <= 0){
            throw new Error('Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!');
           }else{
-           calendar.CALENDAR[day.getDay()].scheduledPeriods[period].amount -= 1
+            calendar.scheduledPeriods[period].amount -= 1
          }
          var order = await collectionOrder.findOne({
            idTray: req.body.orderId
          })
+         console.log(order.status,`put`)
           if (order.status !== 'completed') {
             order = await collectionOrder.updateOne(
               { idTray: req.body.orderId },{
@@ -105,7 +109,7 @@ export default async (req, res) => {
 
             )
             delete calendar['_id']
-            await collectionCalendar.replaceOne({ $and: [{ "ID_TECHNICAL": req.body.technical}, {"CALENDAR.date":req.body.date} ] },calendar)
+            await collectionCalendar.replaceOne({ $and: [{ "ID_TECHNICAL": req.body.technical}, {"date":req.body.date} ] },calendar)
           }else{
             throw new Error('Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!');
           }

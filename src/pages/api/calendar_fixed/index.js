@@ -12,14 +12,14 @@ export default async (req, res) => {
           try {
             var response = req.body
             console.log(req.body)
-            response.CALENDAR.map(async val=>{                
-              val['ID_TECHNICAL'] = response.ID_TECHNICAL                
-              var calendar = await collection.findOne({"ID_TECHNICAL": response.ID_TECHNICAL})            
+            response.CALENDAR.map(async val=>{
+              val['ID_TECHNICAL'] = response.ID_TECHNICAL
+              var calendar = await collection.findOne({ $and: [{ "ID_TECHNICAL": response.ID_TECHNICAL},{"id":parseInt(val.id)}]})
               if(!calendar){
                 calendar = await collection.insertOne(val)
               }else{
                 delete val['_id']
-                calendar = await collection.replaceOne({"ID_TECHNICAL": response.ID_TECHNICAL},val)
+                calendar = await collection.replaceOne({ $and: [{ "ID_TECHNICAL": response.ID_TECHNICAL},{"id":parseInt(val.id)}]},val)
               }
             })
             res.status(201).json({ success: true })
@@ -28,12 +28,12 @@ export default async (req, res) => {
           }
             break;
             case 'GET':
-              try {                
+              try {
                 var calendar = await collection.find({"ID_TECHNICAL": parseInt(req.query["ID_TECHNICAL"])}).sort( { date: 1 } )
                 .toArray()
                 if(calendar.length > 0) {
                   res.json(calendar)
-                }else{        
+                }else{
                   res.json(getCalendarDays(7 * 0))
                 }
               } catch (error) {
