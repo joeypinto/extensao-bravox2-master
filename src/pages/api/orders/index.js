@@ -29,6 +29,7 @@ export default async (req, res) => {
   const { db } = await connectToDatabase()
   const collectionCalendar = db.collection('CALENDAR_DAYS')
   const collectionOrder = db.collection('ORDERS')
+  const collectionFixed = db.collection('CALENDAR_FIXED')
   switch (method) {
     case 'GET':
       try {
@@ -45,7 +46,21 @@ export default async (req, res) => {
         var period = getPeriod(req.body.order.period)
         var day = new Date(req.body.order.dateChance)
         var period = getPeriod(req.body.order.period)
-
+        if(!calendar){
+          let data = new Date(req.body.order.dateChance)
+          console.log((data.getDay()+1))
+          var calfixed = await collectionFixed.findOne({ $and: [{ "ID_TECHNICAL": parseInt(req.body.order.tecnicalId)},{"id":(data.getDay()+1)}]})
+          delete calfixed['_id']
+          calfixed['date'] = req.body.order.dateChance
+          console.log("aaqui2",calfixed)
+          //var calfixed = await collectionFixed.find({"ID_TECHNICAL": parseInt(req.body.order.tecnicalId)}).sort( { date: 1 } )
+                //.toArray()
+                //console.log(calfixed)
+          await collectionCalendar.insertOne(calfixed)
+          calendar = await collectionCalendar.findOne({ $and: [{ "ID_TECHNICAL": req.body.order.tecnicalId}, {"date":req.body.order.dateChance} ] })
+          console.log("aaqui24",calendar)
+        }
+        console.log("aaqui3",calendar)
         if(calendar.scheduledPeriods[period].amount <= 0){
           throw new Error('Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!');
         }else{
@@ -69,6 +84,7 @@ export default async (req, res) => {
         }
         res.status(201).json({ success: true })
       } catch (error) {
+        console.log("error",error)
         res.status(400).json({ error: 'Nao foi possivel agendar a instalacao verifique se a mesma ja foi concluida!' })
       }
       break
