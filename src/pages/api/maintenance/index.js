@@ -13,9 +13,9 @@ export default async (req, res) => {
 
               var order = []
              if(!!req.query.search){
-               order = await collectionOrder.find({$and:[{ "tecnicalId": parseInt(req.query.idTechnical)}, {"status":"pendenting"},{idTray:parseInt(req.query.search) } ] }).toArray();
+               order = await collectionOrder.find({$and:[{ "tecnicalId": parseInt(req.query.idTechnical)}, {"status":"appointment"},{idTray:parseInt(req.query.search) } ] }).toArray();
               }else{
-              order = await collectionOrder.find({$and:[{ "tecnicalId": parseInt(req.query.idTechnical)}, {"status":"pendenting"} ] }).toArray();
+              order = await collectionOrder.find({$and:[{ "tecnicalId": parseInt(req.query.idTechnical)}, {"status":"appointment"} ] }).toArray();
               }
               var resOrden = []
               order.forEach(element => {

@@ -14,26 +14,21 @@ export default async (req, res) => {
       .toArray()
     //Essa funcao vai ajustar o  json para o padrao exigido no frontend
 
+    // let respCalendar = calendar.filter((element) => {
+    //   return element.scheduledPeriods[0].amount + element.scheduledPeriods[1].amount + element.scheduledPeriods[2].amount !== 0
+    // });
+
+    return calendar
+  }
+  const getCalendarFixed = async (id) => {
+    var calendar = await collectionCalendarFixed.find(
+        { ID_TECHNICAL: id },    
+  ).sort( { id: 1 } )
+    .toArray()
     let respCalendar = calendar.filter((element) => {
       return element.scheduledPeriods[0].amount + element.scheduledPeriods[1].amount + element.scheduledPeriods[2].amount !== 0
     });
 
-    return respCalendar
-  }
-  const getCalendarFixed = async (id) => {
-    var respCalendar = []
-    var calendar = await collectionCalendarFixed.findOne({"ID_TECHNICAL": id})
-    if (!calendar) {
-      respCalendar.push({})
-    }else{
-      calendar.CALENDAR.forEach(element => {
-        // retorna apenas se existir vagas naquela data.
-         if(element.scheduledPeriods[0].amount + element.scheduledPeriods[1].amount + element.scheduledPeriods[2].amount !== 0){
-         respCalendar.push({periods:element.scheduledPeriods, dateCalender:element.date})
-        }
-      });
-    }
-    //Essa funcao vai ajustar o  json para o padrao exigido no frontend
     return respCalendar
   }
   const { method } = req
@@ -49,10 +44,10 @@ export default async (req, res) => {
         //console.log(technical,"ell")
         for (const [idx, eltechnical] of technical.entries()) {
           const todo = await getCalendar(eltechnical.ID)
-          //const fixed = await getCalendarFixed(eltechnical.ID)
+          const fixed = await getCalendarFixed(eltechnical.ID)
           //console.log(fixed,"ell")
            eltechnical['calenderTecnical'] = todo
-          //eltechnical['calenderTecnicalFixed'] = fixed
+           eltechnical['calenderTecnicalFixed'] = fixed
         }
         //console.log(technical,"tec")
         res.status(201).json(technical)
