@@ -227,5 +227,5 @@ export const getCalendarDays = (value) =>{
 }
 const dev = process.env.NODE_ENV !== 'production';
 //export const serverPath = dev ? 'http://localhost:3000' : 'https://bravox-app.herokuapp.com';
-//export const serverPath = 'https://extensao-bravox2-master.vercel.app'
-export const serverPath = 'http://localhost:3000'
+export const serverPath = 'https://extensao-bravox2-master.vercel.app'
+//export const serverPath = 'http://localhost:3000'
