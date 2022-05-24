@@ -49,7 +49,10 @@ export default async (req, res) => {
            eltechnical['calenderTecnical'] = todo
            eltechnical['calenderTecnicalFixed'] = fixed
         }
-        //console.log(technical,"tec")
+        technical = technical.filter((technical)=>{
+          return technical.calenderTecnicalFixed
+        })
+        console.log(technical)
         res.status(201).json(technical)
       } catch (error) {
         res.status(400).send({ error: 'O servidor não entendeu a requisição pois está com uma sintaxe inválida 68.' })

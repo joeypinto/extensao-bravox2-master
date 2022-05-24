@@ -245,7 +245,7 @@ export const STATUS_LIST = [
   {
     id: 2,
     label: 'Cancelado',
-    value: 'canceled'
+    value: 'pendenting'
   },
   {
     id: 3,

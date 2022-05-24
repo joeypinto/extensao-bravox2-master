@@ -5,7 +5,7 @@ import { GlobalContext } from 'contexts/globalContext'
 import { SchedulingContext } from 'contexts/schedulingContext'
 import ModalContainer from 'containers/ModalContainer'
 import * as Styles from './styles'
-import { serverPath } from './../../utils/index';
+import { convertPeriod, serverPath } from './../../utils/index';
 import { useRouter } from 'next/router';
 
 const ModalModifyOrder = () => {
@@ -40,8 +40,9 @@ const ModalModifyOrder = () => {
   }
 
   const listDataAvaliable = (arraySelected) => {
+    console.log()
     return arraySelected.filter((days) => {
-      return days.period === ctxScheduling.periodSelected
+      return days.period === ctxScheduling.periodSelected === "evening" || ctxScheduling.periodSelected === "morning" || ctxScheduling.periodSelected === "night" ? convertPeriod(ctxScheduling.periodSelected) : ctxScheduling.periodSelected
     })
   }
 
@@ -116,8 +117,7 @@ const ModalModifyOrder = () => {
               </Styles.FormSelect>
             </Styles.FormContent>
           )}
-          {filterDataOnlyPeriod().length > 0 &&
-            listDataAvaliable(ctxScheduling.daysOfTechnical).length > 0 && (
+          {filterDataOnlyPeriod().length > 0 && (
               <Styles.FormContent>
                 <Styles.FormLabel>Data</Styles.FormLabel>
                 <Styles.FormSelect
