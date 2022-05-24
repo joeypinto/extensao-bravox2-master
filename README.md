@@ -48,4 +48,4 @@ No geral utilizamos o email abaixo, devido a ainda estar estático com o ID:
 
 1. email - `casadosconescc@gmail.com`
 
-### Desenvolvido por SuperTeia
+### Desenvolvido por SuperTeia 
