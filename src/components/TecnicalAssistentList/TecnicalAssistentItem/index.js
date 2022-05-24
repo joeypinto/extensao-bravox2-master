@@ -51,9 +51,9 @@ const TecnicalAssistentItem = ({ assistent }) => {
           <Styles.ListTecnicalItemInfoTextSuccess>
             Agenda disponível próxima: <br />
             <time>
-            {assistent.calenderTecnical[0] ? formatedDateShow(assistent.calenderTecnical[0].dateCalender) : ""}
+         
             </time>
-            {assistent.calenderTecnical[0] ? " - " + assistent.calenderTecnical[0].periods[0].period  : "- Tarde"}
+           
           </Styles.ListTecnicalItemInfoTextSuccess>
           <Styles.TecnicalItemInfoReviewContent>
             <Styles.TecnicalItemInfoReviewText>

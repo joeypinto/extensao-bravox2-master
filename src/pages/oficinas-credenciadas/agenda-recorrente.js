@@ -17,7 +17,7 @@ const RecurringSchedule = (props) => {
     >
       <UserContainer
         menu={<MenuTechnical pageCurrency="RecurringScheduleTecnical" />}
-        title="Planeje sua agenda"
+        title="Planeje sua agenda base"
         body={
           <SchedulingContextProvider >
             <ScheduleTechnicalContainer value={{idTechnical: props.idTechnical}}/>

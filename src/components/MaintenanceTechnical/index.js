@@ -10,14 +10,15 @@ const MaintenanceTechnical = () => {
       {ctxSchedulingMaintenance.schedulingMaintenceDates.length > 0 &&
         ctxSchedulingMaintenance.schedulingMaintenceDates.map(
           (week, indexDay) => {
+            console.log(week)
             return (
               <Styles.MaintenanceDayWrapper key={`day#${indexDay}`}>
                 <Styles.MaintenanceTitle className={week.className}>
                   <Styles.BoldText>{week.dayWeek}</Styles.BoldText>&nbsp;-&nbsp;
-                  {week.data}
+                  {week.date}
                 </Styles.MaintenanceTitle>
                 <Styles.ListPeriods>
-                  {week.periodsDay.scheduledPeriods.map(
+                  {week.scheduledPeriods.map(
                     (period, indexPeriod) => {
                       return (
                         <Styles.PeriodItem key={indexPeriod}>

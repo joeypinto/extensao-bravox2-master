@@ -20,7 +20,6 @@ registerLocale('pt-BR', ptBR)
 //Formatar para extrair o string necessário do DatePicker
 const extractDataPicker = (dateRaw) => {
   const date = new Date(dateRaw)
-
   return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 }
 
@@ -70,13 +69,24 @@ const DialogScheduling = ({ tecnicalData }) => {
 
   //Avalia datas validas
   const validateDate = (dataToValidate) => {
+    let data = new Date(dataToValidate);
     let listOfValidDates = tecnicalData.calenderTecnical.filter((validate) => {
       return (
-        formatDateToValidate(validate.dateCalender) ===
-        formatDateToValidate(dataToValidate)
+        validate.date === data.toISOString().slice(0, 10) &&
+        validate.scheduledPeriods[0].amount + validate.scheduledPeriods[1].amount + validate.scheduledPeriods[2].amount === 0
       )
     })
-
+    return listOfValidDates
+  }
+  const validateDateFixed = (dataToValidate) => {
+    let data = new Date(dataToValidate);
+   
+    let listOfValidDates = tecnicalData.calenderTecnicalFixed.filter((validate) => {
+      return (
+        validate.id === 
+        (data.getDay()+1)
+      )
+    })
     return listOfValidDates
   }
 
@@ -165,9 +175,13 @@ const DialogScheduling = ({ tecnicalData }) => {
     ) {
       //Verifica se a data é anterior a de hoje ou anterior a data de envio
       return CLASSES_DATE_PICKER.DISABLED
-    } else if (validateDate(dateIsValid).length > 0) {
+    }else if (validateDateFixed(dateIsValid).length > 0) {
+      if((validateDate(dateIsValid).length > 0)){
+        return CLASSES_DATE_PICKER.UNVALIABLE
+      }else{
+        return CLASSES_DATE_PICKER.AVALIABLE
+      }
       //Verifica se a data é válida
-      return CLASSES_DATE_PICKER.AVALIABLE
     } else {
       //Caso passe por todas essas validações desabilita
       return CLASSES_DATE_PICKER.UNVALIABLE
@@ -175,14 +189,23 @@ const DialogScheduling = ({ tecnicalData }) => {
   }
 
   const validPeriods = (selectedDate) => {
-    let amountForDate = tecnicalData.calenderTecnical.filter((dateAnalisy) => {
-      return formatDateToValidate(dateAnalisy.dateCalender) === selectedDate
-    })
 
-    let newPeriods = amountForDate[0].periods.filter((newPeriod) => {
+    let amountForDate = tecnicalData.calenderTecnical.filter((dateAnalisy) => {      
+      let data = new Date(selectedDate);
+      return dateAnalisy.date === data.toISOString().slice(0, 10)
+    })
+    if(!!amountForDate){
+      amountForDate = tecnicalData.calenderTecnicalFixed.filter((dateAnalisy) => {      
+        let data = new Date(selectedDate);
+        return dateAnalisy.id === (data.getDay()+1)
+      })
+      console.log(amountForDate,"amountForDate2",tecnicalData)
+    }
+    console.log(amountForDate,"amountForDate",!!amountForDate)
+    let newPeriods = amountForDate[0].scheduledPeriods.filter((newPeriod) => {
+
       return newPeriod.amount > 0
     })
-
     setPeriodTecnical(newPeriods)
   }
  const periodType= (value) =>{
@@ -200,7 +223,7 @@ const DialogScheduling = ({ tecnicalData }) => {
   ctxContext.changeScheduling('period', e);
   setDateActive(true);
 }
-  const changeDateState = (date) => { 
+  const changeDateState = (date) => {
     ctxContext.resetScheduling()
     let validate = validateDatesAndAssignCorrespondingClasses(date)
 

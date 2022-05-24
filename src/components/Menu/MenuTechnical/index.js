@@ -6,20 +6,21 @@ const MenuTechnical = ({ pageCurrency }) => {
       titleMenu="Oficinas Credenciadas"
       linksMenu={[
         {
+          link: `/oficinas-credenciadas/manutencao-da-agenda-instalacoes`,
+          slug: 'MaintenanceInstallationContainer',
+          label: 'Agenda de instalação'
+        },
+        {
           link: `/oficinas-credenciadas/agenda-recorrente`,
           slug: 'RecurringScheduleTecnical',
-          label: 'Agenda recorrente'
+          label: 'Agenda fixa'
         },
         {
           link: `/oficinas-credenciadas/manutencao-da-agenda`,
           slug: 'MaintenanceTechnicalSchedule',
-          label: 'Manutenção da agenda recorrente'
-        },
-        {
-          link: `/oficinas-credenciadas/manutencao-da-agenda-instalacoes`,
-          slug: 'MaintenanceInstallationContainer',
-          label: 'Manutenção da agenda de instalações'
-        },
+          label: 'Exceções da agenda fixa'
+        },       
+       
         {
           link: `/oficinas-credenciadas/consulta-instalacao`,
           slug: 'ConsultInstallationSuccess',

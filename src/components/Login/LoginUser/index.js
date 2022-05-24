@@ -47,8 +47,23 @@ const LoginUser = () => {
       throw new Error('Ocorreu um erro interno ao consultar o pedido 😱')
     }
     const res = await UserCtx.setUserInfo(data.usuario.usuarioId)
+    var list = await fetch(`${serverPath}/api/orders/by_user/?orderByUser=${fieldCodeOrder}`, {method: 'GET'});
+    const ordersByUser = await list.json()
+
+    if(ordersByUser){
+      const order = ordersByUser.filter((order) => {
+        return String(order.idTray) === fieldCodeOrder
+      })      
+      if(order[0].status !== 'pendenting'){
+        res === 'complete' && router.push(`/agendamentos`)
+      }else{
+        res === 'complete' && router.push(`/mapa-de-agendamentos/${fieldCodeOrder}`)
+      }      
+    }else{
+      res === 'complete' && router.push(`/mapa-de-agendamentos/${fieldCodeOrder}`)
+    }    
     //Tambem adicionar o ID do usuário e o CEP dele
-    res === 'complete' && router.push(`/mapa-de-agendamentos/${fieldCodeOrder}`)
+
   } catch (error) {
     GlobalCtx.setInformationsModal({
       title: 'NÃO FOI POSSÍVEL PROCESSAR A SUA SOLICITAÇÃO',
